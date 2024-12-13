@@ -1,0 +1,17 @@
+Flask==2.1.0
+Flask-Cors==3.0.10
+requests==2.26.0
+python-dotenv==0.19.1
+flask-restx
+flask-jwt-extended
+pymongo
+web-vitals
+pytest
+pytest-django
+Flask-WTF
+Werkzeug==2.0.1
+Flask-Login
+Flask-Material
+flask-swagger-ui
+flask-redux
+flask-router
