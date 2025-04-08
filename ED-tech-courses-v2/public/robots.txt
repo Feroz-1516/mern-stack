@@ -1,0 +1,15 @@
+# robots.txt for ED-tech-courses-v2
+
+# Allow all web crawlers
+User-agent: *
+
+# Allow crawling of all content
+Allow: /
+
+# Disallow potential sensitive areas (adjust as needed)
+Disallow: /api/
+Disallow: /admin/
+Disallow: /user/
+
+# Sitemap location (adjust the URL as needed)
+Sitemap: https://www.example.com/sitemap.xml
