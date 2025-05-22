@@ -20,13 +20,19 @@ app.post('/run-code', function (req, res) {
 });
 
 app.get('/run-query', function (req, res) {
-    const context = {
-        data: req.query.data // untrusted input from req.query
-    };
-    const code = 'data + " evaluated"'; // code string to evaluate
+    const rawInput = req.query.data;
 
+    // Basic sanitization or whitelisting can be added as needed
+    const sanitizedInput = typeof rawInput === 'string' ? rawInput.replace(/[^\w\s]/gi, '') : '';
+    
+    const context = {
+        data: sanitizedInput
+    };
+    const code = 'data + " evaluated"';
+    
     vm.createContext(context);
-    const result = vm.runInContext(code, context); // unsafe execution
+    const result = vm.runInContext(code, context);
+
     res.send({ result });
 });
 
