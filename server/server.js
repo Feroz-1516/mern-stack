@@ -1,3 +1,5 @@
+'use strict';
+
 const express = require("express");
 const userRouter = require("./routes/user-routes");
 const blogRouter = require("./routes/blog-routes");
@@ -14,10 +16,19 @@ app.use(express.json());
 app.use("/api/users", userRouter);
 app.use("/api/blogs", blogRouter);
 
-app.use("/api", (req, res, next) => {
-  res.send("hello");
+// Add this error-handling middleware after all other app.use() and routes calls
+app.use((err, req, res, next) => {
+  console.error(err.stack);
+  res.status(500).send('Something broke!');
 });
 
 //define port
 
-app.listen(5001, () => console.log("app started at 5001..."));
+const PORT = process.env.PORT || 5001;
+app.listen(PORT, (err) => {
+  if (err) {
+    console.error('Error starting server:', err);
+    process.exit(1);
+  }
+  console.log(`Server is running on port ${PORT}`);
+});
