@@ -1,3 +1,4 @@
+import os
 from flask import Flask, request, jsonify
 from flask_sqlalchemy import SQLAlchemy
 from flask_jwt_extended import (
@@ -5,12 +6,22 @@ from flask_jwt_extended import (
 )
 from werkzeug.security import generate_password_hash, check_password_hash
 from datetime import timedelta
+from dotenv import load_dotenv
+
+# Load environment variables from .env if available
+load_dotenv()
 
 # Initialize Flask app
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///tasks.db'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
-app.config['JWT_SECRET_KEY'] = 'super-secret-key'
+
+# Load secret key from environment
+jwt_secret = os.environ.get('JWT_SECRET_KEY')
+if not jwt_secret:
+    raise RuntimeError("Missing JWT_SECRET_KEY environment variable. Please set it securely.")
+
+app.config['JWT_SECRET_KEY'] = jwt_secret
 app.config['JWT_ACCESS_TOKEN_EXPIRES'] = timedelta(days=1)
 
 # Initialize extensions
