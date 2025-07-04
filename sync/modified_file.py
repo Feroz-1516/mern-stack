@@ -1,8 +1,12 @@
 import os
 import hashlib
 from flask import Flask, request, send_from_directory, jsonify
+from dotenv import load_dotenv
 
-API_KEY = "12345-SECRET-BANK-KEY"
+# Load environment variables from .env
+load_dotenv()
+
+API_KEY = os.getenv("API_KEY")  # Secure: Read from environment
 
 app = Flask(__name__)
 UPLOAD_FOLDER = 'uploads'
