@@ -2,14 +2,19 @@ from flask import Flask, request, jsonify
 import sqlite3
 import json
 import traceback
+import os
+from dotenv import load_dotenv
+
+# Load environment variables
+load_dotenv()
 
 # Initialize Flask app
 app = Flask(__name__)
 
-# --- Violation 1: Hardcoded DB credentials ---
-DB_PATH = 'bankdb.sqlite'
-DB_USER = 'admin'
-DB_PASS = 'admin123'  # Hardcoded secret
+# Secure DB credentials from env
+DB_PATH = os.getenv('DB_PATH', 'bankdb.sqlite')
+DB_USER = os.getenv('DB_USER')  # Not used for SQLite
+DB_PASS = os.getenv('DB_PASS')  # Not used for SQLite
 
 def get_db_connection():
     return sqlite3.connect(DB_PATH)
